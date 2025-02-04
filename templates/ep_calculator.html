@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор ЕП</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор електроприводів</h1>
+        <form method="post">
+            {{range $index, $equipment := .EquipmentList}}
+                <label>{{$equipment.Name}}:</label>
+                <label>ККД обладнання: <input type="text" name="efficiencyRating{{$index}}" value="{{$equipment.EfficiencyRating}}"></label>
+                <label>Коефіцієнт потужності: <input type="text" name="loadPowerFactor{{$index}}" value="{{$equipment.LoadPowerFactor}}"></label>
+                <label>Напруга (кВ): <input type="text" name="loadVoltage{{$index}}" value="{{$equipment.LoadVoltage}}"></label>
+                <label>Кількість: <input type="text" name="quantity{{$index}}" value="{{$equipment.Quantity}}"></label>
+                <label>Номінальна потужність (кВт): <input type="text" name="nominalPower{{$index}}" value="{{$equipment.NominalPower}}"></label>
+                <label>Коефіцієнт використання: <input type="text" name="usageFactor{{$index}}" value="{{$equipment.UsageFactor}}"></label>
+                <label>tgφ: <input type="text" name="reactivePowerCoefficient{{$index}}" value="{{$equipment.ReactivePowerCoefficient}}"></label>
+            {{end}}
+            <button type="submit">Розрахувати</button>
+        </form>
+
+        {{if .KvGroup}}
+        <div class="result">
+            <h2>Результати:</h2>
+            <p>Груповий коефіцієнт використання: {{.KvGroup}}</p>
+            <p>Ефективна кількість ЕП: {{.EffEpAmount}}</p>
+            <p>Розрахункове активне навантаження: {{.RozrahActNav}}</p>
+            <p>Розрахункове реактивне навантаження: {{.RozrahReactNav}}</p>
+            <p>Повна потужність: {{.FullPower}}</p>
+            <p>Розрахунковий груповий струм ШР1: {{.RozrahGroupStrumShr1}}</p>
+            <p>Коефіцієнт використання цеху: {{.TotalDepartmentUtilCoef}}</p>
+            <p>Ефективна кількість ЕП цеху: {{.EffEpDepartmentAmount}}</p>
+            <p>Розрахункове активне навантаження на шинах: {{.RozrahActNavShin}}</p>
+            <p>Розрахунковий струм на шинах: {{.RozrahGroupStrumShin}}</p>
+        </div>
+        {{end}}
+
+        <a class="back-link" href="/">Повернутися на головну</a>
+    </div>
+</body>
+</html>
